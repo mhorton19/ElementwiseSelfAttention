@@ -1,12 +1,12 @@
 # ElementwiseSelfAttention
-A O(N) with respect to sequence length subtitute/augmentation to the transformer architecture inspired by self-attention
+A O(N) subtitute/augmentation to the transformer architecture inspired by self-attention
 
 This architecture was trained from scratch to perform sentiment analysis on this 2015 kaggle challenge https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews/overview based on this collab notebook https://www.kaggle.com/maroberti/fastai-with-transformers-bert-roberta
 
 This architecture with no pretraining performs similarly to many of the LSTM solutions (around 62% without ensembling)
 
 GOALS:
-1) Make a O(N) non-recurrent model that can be trained end to end for NLP tasks with single outputs (as opposed to sequence outputs). DONE!
+1) Make a O(N) (wrt sequence length) non-recurrent model that can be trained end to end for NLP tasks with single outputs (as opposed to sequence outputs). DONE!
 2) Use this architecture to finetine pretrained tranformers without isolating a single output vector (such as is done with BERT finetuning).
 3) Use this architecture to augment current transformer models.  This model requires a similar amount of parameters to a standard transformer, but far less memory and computation.  Therefore, maybe it is a cheap way to increase parameters and improve performance without adding much compute.  It may also be a cheap way to reduce depth and number of heads because global context can do a lot of the work of increasing the "receptive field" of the self-attention operation.
 4) Use this architecture to enable transformer models with a limited attention field to deal with very long sequences while still incorporating information from the whole sequence.
