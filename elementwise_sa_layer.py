@@ -36,6 +36,7 @@ class ElementwiseSaLayer(nn.Module):
 
         self.intermediate_size = intermediate_size
 
+        self.global_norm = nn.LayerNorm(intermediate_size)
         self.predict_global = nn.Linear(input_size, intermediate_size, bias=False)
         self.predict_weight = nn.Linear(input_size, intermediate_size, bias=False)
         self.predict_gate = nn.Linear(input_size, intermediate_size)
@@ -60,7 +61,8 @@ class ElementwiseSaLayer(nn.Module):
 
 
         global_vec = torch.matmul(global_vecs.unsqueeze(-2), weight_vec.unsqueeze(-1)).squeeze(-1).squeeze(-1)
-        gates = torch.sigmoid(self.predict_gate(x))
+        global_vec = self.global_norm(global_vec)
+        gates = torch.tanh(self.predict_gate(x))
         global_vec = self.global_dropout(global_vec)
         #gates = self.predict_gate(x)
         gated = global_vec.unsqueeze(1) * gates
